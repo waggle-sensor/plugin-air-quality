@@ -36,7 +36,7 @@ class Scanner:
             return True
 
 
-def valid_checksum(data) -> bool:
+def valid_checksum(data: bytes) -> bool:
     fields = data.split(b"*", maxsplit=2)
 
     if len(fields) != 2:
@@ -50,5 +50,5 @@ def valid_checksum(data) -> bool:
     return compute_checksum(fields[0]) == checksum
 
 
-def compute_checksum(data):
+def compute_checksum(data: bytes) -> int:
     return sum(data)
