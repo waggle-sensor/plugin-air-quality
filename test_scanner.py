@@ -1,23 +1,7 @@
 import unittest
-from scanner import Scanner, compute_checksum
+from scanner import Scanner
+from generator import Generator
 from io import BytesIO
-from random import uniform, randint
-
-
-class DataGenerator:
-
-    def readline(self):
-        self.conc = uniform(0, 100)
-        self.flow = uniform(0, 10)
-        self.temp = uniform(-40, 120)
-        rh = randint(0, 999)
-        self.rh = rh/100
-        self.bp = uniform(900, 1100)
-        self.status = randint(0, 99)
-        line = f"{self.conc},{self.flow},{self.temp},{rh},{self.bp},{self.status},".encode()
-        checksum = compute_checksum(line)
-        line += f"*{checksum:04d}\n".encode()
-        return line
 
 
 class TestParse(unittest.TestCase):
@@ -103,7 +87,7 @@ class TestParse(unittest.TestCase):
     
     def test_fuzz(self):
         for _ in range(10000):
-            gen = DataGenerator()
+            gen = Generator()
             scanner = Scanner(gen)
             
             self.assertTrue(scanner.scan())

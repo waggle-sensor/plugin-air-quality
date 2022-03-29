@@ -1,4 +1,7 @@
 class Scanner:
+    """
+    Scanner scans lines of data from the provided reader and stores the parsed values.
+    """
 
     conc: float
     flow: float
