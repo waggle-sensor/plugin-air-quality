@@ -10,7 +10,7 @@ class Scanner:
     def __init__(self, reader):
         self.reader = reader
     
-    def scan(self):
+    def scan(self) -> bool:
         while True:
             line = self.reader.readline()
             if line == b"":
