@@ -3,6 +3,7 @@ from waggle.plugin import Plugin, get_timestamp
 from scanner import Scanner
 from serial import Serial
 import logging
+import time
 
 
 def scan_and_publish(scanner, plugin):
@@ -38,9 +39,15 @@ def main():
         datefmt="%Y/%m/%d %H:%M:%S",
     )
 
-    with Plugin() as plugin, Serial(args.device, baudrate=args.baudrate, timeout=3.0) as dev:
-        scanner = Scanner(dev)
-        scan_and_publish(scanner, plugin)
+    with Plugin() as plugin:
+        while True:
+            logging.info("opening serial device %s @ %s", args.device, args.baudrate)
+            with Serial(args.device, baudrate=args.baudrate, timeout=3.0) as dev:
+                scanner = Scanner(dev)
+                logging.info("started scanning")
+                scan_and_publish(scanner, plugin)
+                logging.info("stopped scanning")
+            time.sleep(5)
 
 
 
