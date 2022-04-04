@@ -10,7 +10,7 @@ def scan_and_publish(scanner, plugin):
     while scanner.scan():
         timestamp = get_timestamp()
 
-        logging.info("publishing conc=%0.3f flow=%0.1f temp=%0.2f rh=%0.2f bp=%0.1f status=%d",
+        logging.info("read conc=%0.3f flow=%0.1f temp=%0.2f rh=%0.2f bp=%0.1f status=%d",
             scanner.conc,
             scanner.flow,
             scanner.temp,
@@ -19,11 +19,13 @@ def scan_and_publish(scanner, plugin):
             scanner.status)
 
         # TODO(sean) use standard ontology where it makes sense or standardize on one
-        plugin.publish("env.air_quality.conc", scanner.conc, timestamp=timestamp)
-        plugin.publish("env.air_quality.flow", scanner.flow, timestamp=timestamp)
-        plugin.publish("env.air_quality.temp", scanner.temp, timestamp=timestamp)
-        plugin.publish("env.air_quality.rh", scanner.rh, timestamp=timestamp)
-        plugin.publish("env.air_quality.bp", scanner.bp, timestamp=timestamp)
+        meta = {"sensor":  "es642"}
+        plugin.publish("env.air_quality.conc", scanner.conc, timestamp=timestamp, meta=meta)
+        plugin.publish("env.air_quality.flow", scanner.flow, timestamp=timestamp, meta=meta)
+        plugin.publish("env.temperature", scanner.temp, timestamp=timestamp, meta=meta)
+        plugin.publish("env.relative_humidity", scanner.rh, timestamp=timestamp, meta=meta)
+        # scanner.bp values are like 984.3 and so need to be scaled by 100 to be in Pa
+        plugin.publish("env.pressure", scanner.bp*100, timestamp=timestamp, meta=meta)
 
 
 def main():

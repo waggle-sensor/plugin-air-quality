@@ -2,7 +2,7 @@ name: "air-quality"
 description: "Plugin for air quality sensor."
 keywords: "sensors, air, air quality"
 authors: "Sean Shahkarami <sshahkarami@anl.gov>"
-version: "0.1.1"
+version: "0.2.0"
 source:
   architectures:
     - linux/amd64
