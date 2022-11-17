@@ -1,5 +1,5 @@
 name: "air-quality"
-description: "Plugin for air quality sensor."
+description: "Plugin for the ES642 air quality sensor."
 keywords: "sensors, air, air quality"
 authors: "Sean Shahkarami <sshahkarami@anl.gov>"
 version: "0.2.0"
